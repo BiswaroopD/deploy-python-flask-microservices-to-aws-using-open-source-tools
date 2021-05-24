@@ -10,9 +10,10 @@ app = Flask(__name__)
 client = boto3.client('dynamodb', region_name='us-east-1')
 dynamoTableName = 'musicTable'
 
+
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return "Hi!! This is Biswa!! Hello World!"
 
 
 @app.route("/v1/bestmusic/90s/<string:artist>")
@@ -20,7 +21,7 @@ def get_artist(artist):
     resp = client.get_item(
         TableName=dynamoTableName,
         Key={
-            'artist': { 'S': artist }
+            'artist': {'S': artist}
         }
     )
     item = resp.get('Item')
@@ -43,8 +44,8 @@ def create_artist():
     resp = client.put_item(
         TableName=dynamoTableName,
         Item={
-            'artist': {'S': artist },
-            'song': {'S': song }
+            'artist': {'S': artist},
+            'song': {'S': song}
         }
     )
 
@@ -55,5 +56,4 @@ def create_artist():
 
 
 if __name__ == '__main__':
-    app.run(threaded=True,host='0.0.0.0',port=5000)
-
+    app.run(threaded=True, host='0.0.0.0', port=5000)
